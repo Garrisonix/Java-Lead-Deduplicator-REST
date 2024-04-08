@@ -1,48 +1,58 @@
-# Deduplication Program
+# Java Lead Deduplicator REST API
 
 ## Overview
-This Java program is designed to deduplicate a set of records based on specific rules. It takes a JSON file as input, processes the records to remove duplicates, and outputs the deduplicated records. The program handles duplicates by preferring records with the newest dates and resolves conflicts by choosing the last record provided in case of identical dates.
+This Java Spring Boot application provides a REST API for de-duplicating leads. It accepts a JSON payload of lead records, processes them to remove duplicates according to predefined rules, and returns the deduplicated list.
 
 ## Preface
-This program was made for a coding challenge interview. There is a REST API version as well.
+This program is created for a coding challenge interview. This is the REST API endpoint version.
 
 ## Requirements
 - Java JDK 11 or later
 - Maven
 
-## Setup
-Clone the repository to your local machine using the following command:
-
-    git clone https://github.com/Garrisonix/Java-Lead-Deduplicator
-
-Navigate to the project directory:
-
-    cd Java-Lead-Deduplicator
-
-## Building the Project
-To build the project, run the following Maven command from the root of the project directory:
+## Build the project
+Use Maven to build the project and create an executable JAR file.
 
     mvn clean package
 
-This command compiles the project and packages it into a runnable JAR file, including all dependencies.
+## Run the application
+Once the build is successful, you can run the application using the following command:
 
-## Running the Program
-To run the program, use the following command, optionally specifying the path to your JSON file as an argument. If no argument is provided, the program defaults to using `leads.json`.
+    java -jar target/<jar-file-name>.jar
+Replace <jar-file-name> with the name of the generated JAR file in the target directory. This command starts the application and the embedded Tomcat server.
 
-    java -jar target/Java-Lead-Deduplicator-1.0-SNAPSHOT.jar [path/to/yourfile.json]
+## Using the Deduplicate Endpoint
+The application exposes a /deduplicate endpoint that accepts POST requests with a JSON payload of lead records.
 
-Example:
+Endpoint
+URL: /deduplicate
+Method: POST
+Content-Type: application/json
+Payload: JSON array of lead records
+Example Request
+You can use tools like curl or Postman to send a request to the deduplicate endpoint. Here's an example using curl:
 
-    java -jar target/Java-Lead-Deduplicator-1.0-SNAPSHOT.jar
-
-Or, if specifying a file:
-
-    java -jar target/Java-Lead-Deduplicator-1.0-SNAPSHOT.jar custom_leads.json
-
-## Running Tests
-This project uses JUnit for testing. To run the tests, execute the following Maven command:
-
-    mvn test
-
-This will run all tests included in the `src/test/java` directory and output the results, showing whether the tests passed or failed.
-
+    curl -X POST http://localhost:8080/deduplicate \
+    -H "Content-Type: application/json" \
+    -d '{
+    "leads": [
+    {
+    "_id": "jkj238238jdsnfsj23",
+    "email": "foo@bar.com",
+    "firstName":  "John",
+    "lastName": "Smith",
+    "address": "123 Street St",
+    "entryDate": "2014-05-07T17:30:20+00:00"
+    },
+    {
+    "_id": "edu45238jdsnfsj23",
+    "email": "mae@bar.com",
+    "firstName":  "Ted",
+    "lastName": "Masters",
+    "address": "44 North Hampton St",
+    "entryDate": "2014-05-07T17:31:20+00:00"
+    }
+    // Add more records as needed
+    ]
+    }'
+Replace the JSON payload with the actual records you wish to deduplicate. The service processes the payload and returns a deduplicated list of records based on the logic defined in the application.

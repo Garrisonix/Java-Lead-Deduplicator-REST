@@ -3,9 +3,6 @@ package com.YellowDuck;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -53,21 +50,5 @@ public class Deduplicator {
                 .filter(record -> latestByEmail.containsKey(record.getEmail()))
                 .sorted(Comparator.comparing(Record::getEntryDate))
                 .collect(Collectors.toList());
-    }
-
-    public static void main(String[] args) {
-        String filePath = args.length > 0 ? args[0] : "leads.json"; // Default to "leads.json"
-
-        try {
-            String jsonContent = new String(Files.readAllBytes(Paths.get(filePath)));
-            List<Record> deduplicatedRecords = deduplicateFromJsonString(jsonContent);
-
-            // Output results.
-            deduplicatedRecords.forEach(record -> System.out.println(record.toString()));
-        } catch (IOException e) {
-            System.err.println("Error reading from file: " + e.getMessage());
-        } catch (Exception e) {
-            System.err.println("An error occurred during deduplication: " + e.getMessage());
-        }
     }
 }

@@ -4,17 +4,24 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.YellowDuck</groupId>
-    <artifactId>Java-Lead-Deduplicator</artifactId>
+    <artifactId>Java-Lead-Deduplicator-REST</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>Java-Lead-Deduplicator</name>
+    <name>Java-Lead-Deduplicator-REST</name>
 
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <java.version>17</java.version>
+        <spring.boot.version>3.2.4</spring.boot.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
+        <!-- Spring Boot Starter Web -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>3.2.4</version>
+        </dependency>
+
         <!-- Lombok Dependency -->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -23,52 +30,73 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- Jackson Core -->
+        <!-- Jackson Dependencies -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
-            <version>2.13.0</version>
+            <version>2.16.1</version>
         </dependency>
-
-        <!-- Jackson Databind -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>2.16.1</version>
         </dependency>
-
-        <!-- Jackson Annotations -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
-            <version>2.13.0</version>
+            <version>2.16.1</version>
         </dependency>
+
+        <!-- Spring Boot Starter Test -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <version>3.2.4</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.junit.vintage</groupId>
+                    <artifactId>junit-vintage-engine</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- JUnit Jupiter API -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>5.7.0</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.7.0</version>
+            <version>5.10.2</version>
             <scope>test</scope>
         </dependency>
 
+        <!-- JUnit Jupiter Engine -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.10.2</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
         <plugins>
+            <!-- Spring Boot Maven Plugin -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>3.2.4</version>
+            </plugin>
             <!-- Maven Compiler Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <release>17</release>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                 </configuration>
             </plugin>
         </plugins>
     </build>
+
 </project>
